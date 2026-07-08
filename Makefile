@@ -8,10 +8,9 @@ CXXFLAGS = -std=c++17 -Wall
 TARGET = flashcard.exe
 
 # Исходные файлы
-SOURCES = src/main.cpp src/word.cpp
-
+SOURCES = src/main.cpp src/word.cpp src/wordlist.cpp
 # Объектные файлы
-OBJECTS = main.o word.o
+OBJECTS = main.o word.o wordlist.o
 
 # Сборка по умолчанию
 all: $(TARGET)
@@ -21,33 +20,24 @@ $(TARGET): $(OBJECTS)
 	$(CXX) -o $@ $^
 
 # Компиляция main.cpp
-main.o: src/main.cpp src/word.h
+main.o: src/main.cpp src/word.h src/wordlist.h
 	$(CXX) $(CXXFLAGS) -c src/main.cpp -o main.o
 
 # Компиляция word.cpp
 word.o: src/word.cpp src/word.h
 	$(CXX) $(CXXFLAGS) -c src/word.cpp -o word.o
 
+# Компиляция wordlist.cpp
+wordlist.o: src/wordlist.cpp src/wordlist.h src/word.h
+	$(CXX) $(CXXFLAGS) -c src/wordlist.cpp -o wordlist.o
+
 # Очистка (удаляем всё, кроме исходников)
 clean:
 	del /f $(OBJECTS) $(TARGET) test.exe 2>nul || exit 0
 
-# Запуск программы (ИСПРАВЛЕНО!)
+# Запуск программы
 run: $(TARGET)
 	.\$(TARGET)
 
 # Пересборка с нуля
 rebuild: clean all
-
-# Показать список файлов
-list:
-	dir /b
-
-# Помощь
-help:
-	@echo Доступные команды:
-	@echo   make        - собрать проект
-	@echo   make run    - собрать и запустить
-	@echo   make clean  - удалить .o и .exe файлы
-	@echo   make rebuild - пересобрать с нуля
-	@echo   make list   - показать список файлов

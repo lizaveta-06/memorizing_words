@@ -15,6 +15,7 @@ void Word::setTranslation(const std::string& t) { translation = t; }
 void Word::incrementRight() { right++; }      
 void Word::incrementWrong() { wrong++; }      
 
+// статистика
 double Word::getSuccessRate() const {
     int total = right + wrong;
     if (total == 0) return 0.5;
