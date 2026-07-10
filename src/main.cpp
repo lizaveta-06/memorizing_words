@@ -4,13 +4,13 @@
 #include "wordlist.h"
 
 void clear() { system("cls"); }
-void pause() { std::cout << "\nНажмите Enter..."; std::cin.ignore(); std::cin.get(); }
+void pause() { std::cout << "\nНажмите Enter"; std::cin.ignore(); std::cin.get(); }
 
 void showAll(WordList& list) {
     clear();
-    std::cout << "=== ВСЕ СЛОВА ===\n\n";
+    std::cout << "ВСЕ СЛОВА\n\n";
     if (list.getSize() == 0) {
-        std::cout << "Словарь пуст.\n";
+        std::cout << "Словарь пуст\n";
     } else {
         for (int i = 0; i < list.getSize(); i++) {
             Word w = list.getWord(i);
@@ -23,7 +23,7 @@ void showAll(WordList& list) {
 
 void addWord(WordList& list) {
     clear();
-    std::cout << "=== ДОБАВЛЕНИЕ СЛОВА ===\n\n";
+    std::cout << "ДОБАВЛЕНИЕ СЛОВА\n\n";
     std::string unknown, translation;
     std::cout << "Слово: "; std::getline(std::cin, unknown);
     std::cout << "Перевод: "; std::getline(std::cin, translation);
@@ -38,6 +38,70 @@ void addWord(WordList& list) {
     pause();
 }
 
+void editWord(WordList& list) {
+    clear();
+    std::cout << "=== РЕДАКТИРОВАНИЕ СЛОВА ===\n\n";
+    if (list.getSize() == 0) {
+        std::cout << "Словарь пуст. Нечего редактировать.\n";
+        pause();
+        return;
+    }
+   showAll(list); 
+    
+    std::cout << "Введите номер слова для редактирования: ";
+    int index;
+    std::cin >> index;
+    std::cin.ignore();
+    
+    if (index < 1 || index > list.getSize()) {
+        std::cout << "Неверный номер!\n";
+        pause();
+        return;
+    }
+    
+    Word w = list.getWord(index - 1);
+    std::cout << "\nТекущее слово: " << w.getUnknown() << " -> " << w.getTranslation() << "\n";
+    std::string newUnknown, newTranslation;
+    std::cout << "Новое слово: ";
+    std::getline(std::cin, newUnknown);
+    std::cout << "Новый перевод: ";
+    std::getline(std::cin, newTranslation);
+    
+    if (!newUnknown.empty()) w.setUnknown(newUnknown);
+    if (!newTranslation.empty()) w.setTranslation(newTranslation);
+    
+    list.editWord(index - 1, w);
+    list.saveFile("resources/words.txt");
+    std::cout << "\nСлово обновлено!\n";
+    pause();
+}
+void deleteWord(WordList& list) {
+    clear();
+    std::cout << "УДАЛЕНИЕ СЛОВА\n\n";
+    if (list.getSize() == 0) {
+        std::cout << "Словарь пуст. Нечего удалять.\n";
+        pause();
+        return;
+    }
+    
+    showAll(list);
+    
+    std::cout << "Введите номер слова для удаления: ";
+    int index;
+    std::cin >> index;
+    std::cin.ignore();
+    
+    if (index < 1 || index > list.getSize()) {
+        std::cout << "Неверный номер!\n";
+        pause();
+        return;
+    }
+    list.removeWord(index - 1);
+    list.saveFile("resources/words.txt");
+    std::cout << "\nСлово удалено!\n";
+    pause();
+}
+
 int main() {
     SetConsoleOutputCP(65001);
     WordList list;
@@ -45,13 +109,20 @@ int main() {
 
     while (true) {
         clear();
-        std::cout << "=== КАРТОЧКИ ДЛЯ ЗАУЧИВАНИЯ СЛОВ ===\n\n";
-        std::cout << "1. Добавить слово\n2. Показать все слова\n3. Выйти\n\nВыберите: ";
+        std::cout << "КАРТОЧКИ ДЛЯ ЗАУЧИВАНИЯ СЛОВ\n\n";
+        std::cout << "1. Добавить слово\n";
+        std::cout << "2. Показать все слова\n";
+        std::cout << "3. Редактировать слово\n";
+        std::cout << "4. Удалить слово\n";
+        std::cout << "5. Выйти\n\n";
+        std::cout << "Выберите: ";
         int choice; std::cin >> choice; std::cin.ignore();
 
         if (choice == 1) addWord(list);
         else if (choice == 2) showAll(list);
-        else if (choice == 3) { std::cout << "\nДо свидания!\n"; break; }
+        else if (choice == 3) editWord(list);
+        else if (choice == 4) deleteWord(list);
+        else if (choice == 5) { std::cout << "\nПока!\n"; break; }
         else { std::cout << "Неверный выбор!\n"; pause(); }
     }
     return 0;
