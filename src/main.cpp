@@ -6,6 +6,7 @@
 void clear() { system("cls"); }
 void pause() { std::cout << "\nНажмите Enter"; std::cin.ignore(); std::cin.get(); }
 
+//показ списка слов
 void showAll(WordList& list) {
     clear();
     std::cout << "ВСЕ СЛОВА\n\n";
@@ -20,7 +21,7 @@ void showAll(WordList& list) {
     }
     pause();
 }
-
+//добавление
 void addWord(WordList& list) {
     clear();
     std::cout << "ДОБАВЛЕНИЕ СЛОВА\n\n";
@@ -40,7 +41,7 @@ void addWord(WordList& list) {
 //редактирование
 void editWord(WordList& list) {
     clear();
-    std::cout << "=== РЕДАКТИРОВАНИЕ СЛОВА ===\n\n";
+    std::cout << "РЕДАКТИРОВАНИЕ СЛОВА\n\n";
     if (list.getSize() == 0) {
         std::cout << "Словарь пуст. Нечего редактировать.\n";
         pause();
@@ -104,9 +105,10 @@ void deleteWord(WordList& list) {
     pause();
 }
 
+//тренировка
 void train(WordList& list) {
     clear();
-    std::cout << "=== ТРЕНИРОВКА ===\n\n";
+    std::cout << "ТРЕНИРОВКА\n\n";
     
     if (list.getSize() == 0) {
         std::cout << "Словарь пуст! Добавьте слова перед тренировкой.\n";
@@ -124,7 +126,7 @@ void train(WordList& list) {
         std::cout << "Сессия верно:" << correct << ", неверно:" << incorrect 
                   << ", всего:" << total << "\n\n";
         
-        Word w = list.getRandomWord();
+        Word w = list.getSmartRandomWord();
         std::cout << "Слово: " << w.getUnknown() << "\n\n";
         std::cout << "Enter";
         std::cin.get();

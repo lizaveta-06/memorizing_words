@@ -81,9 +81,24 @@ void WordList::saveFile(const std::string& filename) {
     }
     file.close();
 }
-
-Word WordList::getRandomWord() const {
+// умная логика тренировки 
+Word WordList::getSmartRandomWord() const {
     if (words.empty()) return Word();
-    int index = rand() % words.size();
-    return words[index];
+    std::vector<double> wts;
+    double totalWt = 0;
+    for (const Word& w : words) {
+        double rate = w.getSuccessRate();
+        double wt = 1.0 - rate + 0.1;
+        wts.push_back(wt);
+        totalWt += wt;
+    }
+    double r = (double)rand() / RAND_MAX * totalWt;
+    double sum = 0;
+    for (int i=0; i<(int)wts.size(); i++) {
+        sum += wts[i];
+        if (r <= sum) {
+            return words[i];
+        }
+    }
+    return words.back();
 }

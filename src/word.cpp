@@ -1,9 +1,7 @@
 #include "word.h"
 
-//по умолчанию
 Word::Word() : unknown(""), translation(""), right(0), wrong(0) {}
 
-//с параметрами
 Word::Word(const std::string& unknown, const std::string& translation)
     : unknown(unknown), translation(translation), right(0), wrong(0) {}
 

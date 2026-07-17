@@ -24,7 +24,8 @@ public:
     void loadFile(const std::string& filename);
     //сохранение в файл
     void saveFile(const std::string& filename);
-    //случайное слово
-    Word getRandomWord() const;
+    //умный алгоритм для тренировки
+    Word getSmartRandomWord() const;
+    
 };
 #endif
