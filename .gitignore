@@ -1,3 +1,8 @@
 *.exe
 *.o
 nul
+*.out
+moc_*
+ui_*
+*.moc
+build/

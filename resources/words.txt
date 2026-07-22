@@ -2,3 +2,5 @@ milk	молоко	10	7
 honey	мед	5	5
 bag	сумка	4	1
 cat	кошка	6	1
+to swim	плавать	0	0
+to fly	летать	0	0
