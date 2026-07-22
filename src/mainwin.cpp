@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     wordList.loadFile("../resources/words.txt");
 
-    // Создаём центральный виджет
     recreateMainWidget();
     showMainMenu();
 }
@@ -28,12 +27,10 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::recreateMainWidget() {
-    // Удаляем старый центральный виджет
     if (mainWidget) {
         delete mainWidget;
         mainWidget = nullptr;
     }
-    // Создаём новый
     mainWidget = new QWidget(this);
     mainWidget->setStyleSheet("background-color: white;");
     setCentralWidget(mainWidget);
@@ -41,7 +38,6 @@ void MainWindow::recreateMainWidget() {
 }
 
 void MainWindow::clearLayout() {
-    // Просто пересоздаём виджет
     recreateMainWidget();
 }
 
